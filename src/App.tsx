@@ -1,15 +1,40 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import { useEffect, useState } from "react";
+import Header from "./components/ui/Header";
+import Main from "./components/ui/Main";
+import Footer from "./components/ui/Footer";
 
+function App() {
+  const [dev, setDev] = useState("Matheus Castelini");
+  const [input, setInput] = useState('');
+  const [imagem, setImagem] = useState(false);
+  const [corExterna, setCorExterna] = useState(false);
 
-function App(){
-  return(
+  const alterarDevCor = () => (
+    setDev(input),
+    setCorExterna(!corExterna)
+  );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setImagem(true);
+    }, 60000);
+
+    return () => clearTimeout(timer);
+  })
+
+  return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />}/>
-        </Routes>
-      </BrowserRouter>
+      <Header
+        corExterna={corExterna}
+      />
+
+      <Main
+        img={imagem}
+      />
+
+      <Footer
+        click={alterarDevCor}
+      />
     </>
   )
 }
